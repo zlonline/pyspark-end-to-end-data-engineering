@@ -1,0 +1,13 @@
+strategy,run,elapsed_seconds,file_count
+default,1,0.886,1
+repartition_4,1,0.569,4
+repartition_8,1,0.439,8
+coalesce_2,1,0.276,1
+repartition_4,2,0.317,4
+repartition_8,2,0.404,8
+coalesce_2,2,0.136,1
+default,2,0.145,1
+repartition_8,3,0.294,8
+coalesce_2,3,0.172,1
+default,3,0.144,1
+repartition_4,3,0.244,4

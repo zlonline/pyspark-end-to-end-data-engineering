@@ -1,0 +1,41 @@
+2026-11-14 17:48:11,007 | INFO | ============================================================
+2026-11-14 17:48:11,007 | INFO | WEEK 12 PIPELINE STARTED
+2026-11-14 17:48:11,007 | INFO | Start time: 2026-11-14T17:48:11.007242
+2026-11-14 17:48:11,007 | INFO | Configuration: {'join_strategy': 'broadcast', 'shuffle_partitions': 8, 'compression': 'snappy', 'run_validation': True, 'run_consistency_test': True}
+2026-11-14 17:48:11,007 | INFO | ------------------------------------------------------------
+2026-11-14 17:48:11,023 | INFO | STAGE: Generate Bronze
+2026-11-14 17:48:11,023 | INFO | Starting module: week12.generate_data
+2026-11-14 17:48:45,130 | INFO | Completed: week12.generate_data | 34.11 seconds
+2026-11-14 17:48:45,130 | INFO | ------------------------------------------------------------
+2026-11-14 17:48:45,130 | INFO | STAGE: Ingestion
+2026-11-14 17:48:45,130 | INFO | Starting module: week12.ingestion
+2026-11-14 17:49:10,594 | INFO | Completed: week12.ingestion | 25.47 seconds
+2026-11-14 17:49:10,594 | INFO | ------------------------------------------------------------
+2026-11-14 17:49:10,594 | INFO | STAGE: Clean Silver
+2026-11-14 17:49:10,594 | INFO | Starting module: week12.cleaning
+2026-11-14 17:49:54,246 | INFO | Completed: week12.cleaning | 43.65 seconds
+2026-11-14 17:49:54,246 | INFO | ------------------------------------------------------------
+2026-11-14 17:49:54,246 | INFO | STAGE: Validate Silver
+2026-11-14 17:49:54,246 | INFO | Starting module: week12.validation
+2026-11-14 17:50:27,246 | INFO | Completed: week12.validation | 33.00 seconds
+2026-11-14 17:50:27,247 | INFO | ------------------------------------------------------------
+2026-11-14 17:50:27,247 | INFO | STAGE: Build Sales Detail
+2026-11-14 17:50:27,247 | INFO | Starting module: week12.transform
+2026-11-14 17:50:59,059 | INFO | Completed: week12.transform | 31.81 seconds
+2026-11-14 17:50:59,059 | INFO | ------------------------------------------------------------
+2026-11-14 17:50:59,059 | INFO | STAGE: Build Gold Analytics
+2026-11-14 17:50:59,059 | INFO | Starting module: week12.aggregation
+2026-11-14 17:51:39,647 | INFO | Completed: week12.aggregation | 40.59 seconds
+2026-11-14 17:51:39,654 | INFO | ------------------------------------------------------------
+2026-11-14 17:51:39,654 | INFO | Running result consistency test
+2026-11-14 17:51:39,655 | INFO | Starting module: pytest
+2026-11-14 17:51:39,944 | ERROR | Module failed: pytest | exit_code=1
+2026-11-14 17:51:39,944 | ERROR | PIPELINE FAILED
+Traceback (most recent call last):
+  File "C:\Users\rzhong\Documents\PythonScripts\pyspark-fundamentals\week12\main.py", line 232, in main
+    run_pipeline(
+  File "C:\Users\rzhong\Documents\PythonScripts\pyspark-fundamentals\week12\main.py", line 177, in run_pipeline
+    run_module(
+  File "C:\Users\rzhong\Documents\PythonScripts\pyspark-fundamentals\week12\main.py", line 90, in run_module
+    raise RuntimeError(
+RuntimeError: pytest failed with exit code 1

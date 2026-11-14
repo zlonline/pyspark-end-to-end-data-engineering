@@ -1,0 +1,16 @@
+*(3) Project [order_id#173L, order_date#176, customer_id#174L, customer_name#181, region#182, product_id#175L, product_name#185, category#186, quantity#177, unit_price#178, line_total#189]
++- *(3) BroadcastHashJoin [product_id#175L], [product_id#184L], Inner, BuildRight, false
+   :- *(3) Project [customer_id#174L, order_id#173L, product_id#175L, order_date#176, quantity#177, unit_price#178, line_total#189, customer_name#181, region#182]
+   :  +- *(3) BroadcastHashJoin [customer_id#174L], [customer_id#180L], Inner, BuildRight, false
+   :     :- *(3) Project [order_id#173L, customer_id#174L, product_id#175L, order_date#176, quantity#177, unit_price#178, cast((cast(quantity#177 as decimal(10,0)) * unit_price#178) as decimal(18,2)) AS line_total#189]
+   :     :  +- *(3) Filter (((isnotnull(status#179) AND (status#179 = Completed)) AND isnotnull(customer_id#174L)) AND isnotnull(product_id#175L))
+   :     :     +- *(3) ColumnarToRow
+   :     :        +- FileScan parquet [order_id#173L,customer_id#174L,product_id#175L,order_date#176,quantity#177,unit_price#178,status#179] Batched: true, DataFilters: [isnotnull(status#179), (status#179 = Completed), isnotnull(customer_id#174L), isnotnull(product_..., Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/C:/Users/rzhong/Documents/PythonScripts/pyspark-fundamentals/dat..., PartitionFilters: [], PushedFilters: [IsNotNull(status), EqualTo(status,Completed), IsNotNull(customer_id), IsNotNull(product_id)], ReadSchema: struct<order_id:bigint,customer_id:bigint,product_id:bigint,order_date:date,quantity:int,unit_pri...
+   :     +- BroadcastExchange HashedRelationBroadcastMode(List(input[0, bigint, false]),false), [plan_id=1607]
+   :        +- *(1) Filter isnotnull(customer_id#180L)
+   :           +- *(1) ColumnarToRow
+   :              +- FileScan parquet [customer_id#180L,customer_name#181,region#182] Batched: true, DataFilters: [isnotnull(customer_id#180L)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/C:/Users/rzhong/Documents/PythonScripts/pyspark-fundamentals/dat..., PartitionFilters: [], PushedFilters: [IsNotNull(customer_id)], ReadSchema: struct<customer_id:bigint,customer_name:string,region:string>
+   +- BroadcastExchange HashedRelationBroadcastMode(List(input[0, bigint, false]),false), [plan_id=1615]
+      +- *(2) Filter isnotnull(product_id#184L)
+         +- *(2) ColumnarToRow
+            +- FileScan parquet [product_id#184L,product_name#185,category#186] Batched: true, DataFilters: [isnotnull(product_id#184L)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/C:/Users/rzhong/Documents/PythonScripts/pyspark-fundamentals/dat..., PartitionFilters: [], PushedFilters: [IsNotNull(product_id)], ReadSchema: struct<product_id:bigint,product_name:string,category:string>

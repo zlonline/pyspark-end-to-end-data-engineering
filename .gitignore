@@ -1,0 +1,34 @@
+
+# Python
+__pycache__
+.py[cod]
+.pytest_cache
+.venv
+venv
+
+# IDE
+.vscode
+.idea
+
+# Environment
+.env
+.env.
+
+# Generated data
+dataweek12
+
+# Spark runtime
+spark-warehouse
+metastore_db
+derby.log
+
+# Logs
+.log
+
+# Generated benchmark artifacts
+week12resultsspark-events
+week12results.csv
+
+# OS
+.DS_Store
+Thumbs.db

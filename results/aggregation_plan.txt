@@ -1,0 +1,9 @@
+AdaptiveSparkPlan isFinalPlan=false
++- Window [dense_rank(total_sales#13) windowspecdefinition(total_sales#13 DESC NULLS LAST, specifiedwindowframe(RowFrame, unboundedpreceding$(), currentrow$())) AS sales_rank#30], [total_sales#13 DESC NULLS LAST]
+   +- Sort [total_sales#13 DESC NULLS LAST], false, 0
+      +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [plan_id=23]
+         +- Project [customer_id#2L, customer_name#3, region#4, order_count#11L, total_quantity#12L, total_sales#13, cast((total_sales#13 / cast(order_count#11L as decimal(20,0))) as decimal(18,2)) AS avg_order_value#29]
+            +- HashAggregate(keys=[customer_id#2L, customer_name#3, region#4], functions=[count(1), sum(quantity#8), sum(line_total#10)], output=[customer_id#2L, customer_name#3, region#4, order_count#11L, total_quantity#12L, total_sales#13])
+               +- Exchange hashpartitioning(customer_id#2L, customer_name#3, region#4, 8), ENSURE_REQUIREMENTS, [plan_id=19]
+                  +- HashAggregate(keys=[customer_id#2L, customer_name#3, region#4], functions=[partial_count(1), partial_sum(quantity#8), partial_sum(line_total#10)], output=[customer_id#2L, customer_name#3, region#4, count#90L, sum#91L, sum#92, isEmpty#93])
+                     +- FileScan parquet [customer_id#2L,customer_name#3,region#4,quantity#8,line_total#10] Batched: true, DataFilters: [], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/C:/Users/rzhong/Documents/PythonScripts/pyspark-fundamentals/dat..., PartitionFilters: [], PushedFilters: [], ReadSchema: struct<customer_id:bigint,customer_name:string,region:string,quantity:int,line_total:decimal(18,2)>

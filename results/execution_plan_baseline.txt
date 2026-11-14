@@ -1,0 +1,22 @@
+*(9) Project [order_id#0L, order_date#3, customer_id#1L, customer_name#8, region#9, product_id#2L, product_name#12, category#13, quantity#4, unit_price#5, line_total#16]
++- *(9) SortMergeJoin [product_id#2L], [product_id#11L], Inner
+   :- *(6) Sort [product_id#2L ASC NULLS FIRST], false, 0
+   :  +- Exchange hashpartitioning(product_id#2L, 8), ENSURE_REQUIREMENTS, [plan_id=99]
+   :     +- *(5) Project [customer_id#1L, order_id#0L, product_id#2L, order_date#3, quantity#4, unit_price#5, line_total#16, customer_name#8, region#9]
+   :        +- *(5) SortMergeJoin [customer_id#1L], [customer_id#7L], Inner
+   :           :- *(2) Sort [customer_id#1L ASC NULLS FIRST], false, 0
+   :           :  +- Exchange hashpartitioning(customer_id#1L, 8), ENSURE_REQUIREMENTS, [plan_id=82]
+   :           :     +- *(1) Project [order_id#0L, customer_id#1L, product_id#2L, order_date#3, quantity#4, unit_price#5, cast((cast(quantity#4 as decimal(10,0)) * unit_price#5) as decimal(18,2)) AS line_total#16]
+   :           :        +- *(1) Filter (((isnotnull(status#6) AND (status#6 = Completed)) AND isnotnull(customer_id#1L)) AND isnotnull(product_id#2L))
+   :           :           +- *(1) ColumnarToRow
+   :           :              +- FileScan parquet [order_id#0L,customer_id#1L,product_id#2L,order_date#3,quantity#4,unit_price#5,status#6] Batched: true, DataFilters: [isnotnull(status#6), (status#6 = Completed), isnotnull(customer_id#1L), isnotnull(product_id#2L)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/C:/Users/rzhong/Documents/PythonScripts/pyspark-fundamentals/dat..., PartitionFilters: [], PushedFilters: [IsNotNull(status), EqualTo(status,Completed), IsNotNull(customer_id), IsNotNull(product_id)], ReadSchema: struct<order_id:bigint,customer_id:bigint,product_id:bigint,order_date:date,quantity:int,unit_pri...
+   :           +- *(4) Sort [customer_id#7L ASC NULLS FIRST], false, 0
+   :              +- Exchange hashpartitioning(customer_id#7L, 8), ENSURE_REQUIREMENTS, [plan_id=91]
+   :                 +- *(3) Filter isnotnull(customer_id#7L)
+   :                    +- *(3) ColumnarToRow
+   :                       +- FileScan parquet [customer_id#7L,customer_name#8,region#9] Batched: true, DataFilters: [isnotnull(customer_id#7L)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/C:/Users/rzhong/Documents/PythonScripts/pyspark-fundamentals/dat..., PartitionFilters: [], PushedFilters: [IsNotNull(customer_id)], ReadSchema: struct<customer_id:bigint,customer_name:string,region:string>
+   +- *(8) Sort [product_id#11L ASC NULLS FIRST], false, 0
+      +- Exchange hashpartitioning(product_id#11L, 8), ENSURE_REQUIREMENTS, [plan_id=108]
+         +- *(7) Filter isnotnull(product_id#11L)
+            +- *(7) ColumnarToRow
+               +- FileScan parquet [product_id#11L,product_name#12,category#13] Batched: true, DataFilters: [isnotnull(product_id#11L)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/C:/Users/rzhong/Documents/PythonScripts/pyspark-fundamentals/dat..., PartitionFilters: [], PushedFilters: [IsNotNull(product_id)], ReadSchema: struct<product_id:bigint,product_name:string,category:string>

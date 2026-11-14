@@ -1,0 +1,7 @@
+run,pipeline,elapsed_seconds
+1,baseline,9.387
+1,optimized,1.934
+2,optimized,1.53
+2,baseline,3.034
+3,baseline,3.007
+3,optimized,1.445
